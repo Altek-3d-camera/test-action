@@ -14,40 +14,41 @@ env:
   
 jobs:    
   Windows_cpp:
-    runs-on: windows-2016
+    runs-on: windows-latest
     timeout-minutes: 60
     env:
       VS15: true
     steps:
     - uses: actions/checkout@v2    
 
-    - name: Enable Long Paths
-      shell: powershell
-      run: |
-       New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name "LongPathsEnabled" -Value 1 -PropertyType DWORD -Force
+  
+    # - name: Enable Long Paths
+    #   shell: powershell
+    #   run: |
+    #    New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name "LongPathsEnabled" -Value 1 -PropertyType DWORD -Force
 
-    - name: PreBuild
-      shell: bash
-      run: |
-       cd scripts && ./api_check.sh && cd ..
-       mkdir build
+    # - name: PreBuild
+    #   shell: bash
+    #   run: |
+    #    cd scripts && ./api_check.sh && cd ..
+    #    mkdir build
 
-    - name: Configure CMake
-    # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
-    # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-      shell: bash
-      run: |        
-        cd build
-        pwd
-        ls
-        cmake .. -G "Visual Studio 15 2017 Win64" -DBUILD_EXAMPLES=true -DBUILD_WITH_TM2=true -DCHECK_FOR_UPDATES=true
+    # - name: Configure CMake
+    # # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
+    # # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
+    #   shell: bash
+    #   run: |        
+    #     cd build
+    #     pwd
+    #     ls
+    #     cmake .. -G "Visual Studio 15 2017 Win64" -DBUILD_EXAMPLES=true -DBUILD_WITH_TM2=true -DCHECK_FOR_UPDATES=true
 
-    - name: Build
-      # Build your program with the given configuration
-      shell: bash
-      run: |
-        cd build
-        cmake --build . --config ${{env.LRS_BUILD_CONFIG}} -- -m    
+    # - name: Build
+    #   # Build your program with the given configuration
+    #   shell: bash
+    #   run: |
+    #     cd build
+    #     cmake --build . --config ${{env.LRS_BUILD_CONFIG}} -- -m    
 
     - name: Generate build number
       uses: einaregilsson/build-number@v3
@@ -55,14 +56,13 @@ jobs:
         token: ${{secrets.github_token}}        
     
     - name: Print new build number
-      run: echo "Build number is $BUILD_NUMBER"
+      run: echo "Build number is ${env:BUILD_NUMBER}"
       # Or, if you're on Windows: echo "Build number is ${env:BUILD_NUMBER}"
 
-    - name: Generate release tag
-        uses: amitsingh-007/next-release-tag@v1.0.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-
+    # - name: Generate release tag
+    #     uses: amitsingh-007/next-release-tag@v1.0.0
+    #     with:
+    #        token: ${{secrets.github_token}}        
        
   
 
