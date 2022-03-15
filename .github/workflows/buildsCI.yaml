@@ -20,7 +20,7 @@ jobs:
     env:
       VS15: true
     steps:
-      - name: checkout
+      - name: checkout tag 
         uses: actions/checkout@v2
       - name: package-version-to-git-tag
         uses: pkgdeps/git-tag-action@v2
