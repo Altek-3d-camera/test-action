@@ -19,7 +19,23 @@ jobs:
     env:
       VS15: true
     steps:
-    - uses: actions/checkout@v2    
+    - uses: actions/checkout@v2   
+
+    - name: set env
+    run: echo "NOW=$(date +'%Y.%m.%d')" >> $GITHUB_ENV
+    
+    - name: "Build & test"
+      run: |
+      echo "done!"
+
+    - uses: "marvinpinto/action-automatic-releases@latest"
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "${{ env.NOW }}"
+        prerelease: false
+        title: "${{ env.NOW }}"
+        files: |
+          test.txt 
 
   
     # - name: Enable Long Paths
@@ -50,11 +66,8 @@ jobs:
     #     cd build
     #     cmake --build . --config ${{env.LRS_BUILD_CONFIG}} -- -m
 
-    - name: Generate release tag
-      uses: amitsingh-007/next-release-tag@v1.0.0
-      with:
-        token: ${{secrets.github_token}}        
-           
+    
+
 
     # - name: Generate build number
     #   uses: einaregilsson/build-number@v3
@@ -65,8 +78,4 @@ jobs:
     #   run: echo "Build number is ${env:BUILD_NUMBER}"
       # Or, if you're on Windows: echo "Build number is ${env:BUILD_NUMBER}"
 
-    # - name: Generate release tag
-    #     uses: amitsingh-007/next-release-tag@v1.0.0
-    #     with:
-    #        token: ${{secrets.github_token}}        
-       
+   
