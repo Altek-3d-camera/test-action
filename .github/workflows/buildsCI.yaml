@@ -20,10 +20,11 @@ jobs:
     env:
       VS15: true
     steps:
-      # - name: checkout tag 
+      # - name: checkout 
       #   uses: actions/checkout@v2
       - name: package-version-to-git-tag
         id: create_release
+        tag_name: altek
         uses: zendesk/action-create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
