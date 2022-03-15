@@ -20,11 +20,12 @@ jobs:
     env:
       VS15: true
     steps:
-       name: Create Release
+      # - name: checkout tag 
+      #   uses: actions/checkout@v2
+      - name: package-version-to-git-tag
         id: create_release
         uses: zendesk/action-create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-     
 
  
