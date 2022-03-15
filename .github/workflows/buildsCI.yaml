@@ -20,14 +20,12 @@ jobs:
     env:
       VS15: true
     steps:
-      - name: Set current date as env variable
-        run: echo "NOW::$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
-      - name: create release
-        uses: ncipollo/release-action@v1
-        with:
-          artifacts: my-artifact
-          tag: ${{ env.NOW }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v2    
+      - name: Bump version and push tag
+        uses: anothrNick/github-tag-action@1.36.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
 
 
      
