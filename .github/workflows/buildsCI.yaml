@@ -14,7 +14,7 @@ env:
   
 jobs:    
   Windows_cpp:
-    runs-on: windows-2019
+    runs-on: windows-2017
     timeout-minutes: 60
     env:
       VS15: true
