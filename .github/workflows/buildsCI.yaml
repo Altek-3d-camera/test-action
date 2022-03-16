@@ -14,7 +14,7 @@ env:
   
 jobs:    
   Windows_cpp:
-    runs-on: windows-2022
+    runs-on: windows-latest
     timeout-minutes: 60
     env:
       VS15: true
@@ -49,12 +49,15 @@ jobs:
         cd build
         cmake --build . --config ${{env.LRS_BUILD_CONFIG}} -- -m    
 
-    - name: Generate build number
-      uses: einaregilsson/build-number@v3
+    - name: package-version-to-git-tag 
+      id: create_release
+      uses: zendesk/action-create-release@v1
       with:
-        token: ${{secrets.github_token}}        
-    
-    - name: Print new build number
-      run: echo "Build number is ${env:BUILD_NUMBER}"
-      # Or, if you're on Windows: echo "Build number is ${env:BUILD_NUMBER}"
-       
+        # tag_name: "0.1.0"
+        auto_increment_type: patch
+        #release_name: Release ${{ github.ref }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+
