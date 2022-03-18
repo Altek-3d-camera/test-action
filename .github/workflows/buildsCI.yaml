@@ -1,4 +1,4 @@
-name: Build_CI
+name: Build_CI test
 
 on:
   push:
